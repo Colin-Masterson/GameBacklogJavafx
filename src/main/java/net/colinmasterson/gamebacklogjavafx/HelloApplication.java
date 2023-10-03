@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import net.colinmasterson.gamebacklogjavafx.database.DatabaseController;
 
 import java.io.IOException;
 
@@ -18,6 +19,8 @@ public class HelloApplication extends Application {
     }
 
     public static void main(String[] args) {
+        DatabaseController db = new DatabaseController();
+        db.connect();
         launch();
     }
 }
