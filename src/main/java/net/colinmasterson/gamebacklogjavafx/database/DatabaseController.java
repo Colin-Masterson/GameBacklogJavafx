@@ -10,22 +10,29 @@ import java.sql.Statement;
 
 public class DatabaseController {
 
-    public void connect(){
+    private Connection connection;
 
-
+    public void connect() {
 
         try {
-
             String jdbcUrl = "jdbc:sqlite:games.db";
-            Connection connection = DriverManager.getConnection(jdbcUrl);
+            this.connection = DriverManager.getConnection(jdbcUrl);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void createTable() {
+        try {
             String createTableSql = "create table games (name varchar(30), description varchar(70), console varchar(20))";
 
-           Statement statement = connection.createStatement();
-           statement.executeUpdate(createTableSql);
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(createTableSql);
 
             System.out.println("Table Created");
 
-        }catch (SQLException  | NullPointerException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
