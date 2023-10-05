@@ -20,8 +20,9 @@ public class HelloApplication extends Application {
 
     public static void main(String[] args) {
         DatabaseController db = new DatabaseController();
-        db.connect();
         db.createTable();
+        db.addGame("Test","Test", "Test");
+        db.getGames();
         launch();
     }
 }
