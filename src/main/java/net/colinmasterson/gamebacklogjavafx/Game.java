@@ -1,12 +1,11 @@
 package net.colinmasterson.gamebacklogjavafx;
 
-import java.util.ArrayList;
 
 public class Game {
 
-    private int id;
-    private String name;
-    private String console;
+    private final int id;
+    private final String name;
+    private final String console;
     private String status;
 
     public Game(int id,String name, String console, String status){
