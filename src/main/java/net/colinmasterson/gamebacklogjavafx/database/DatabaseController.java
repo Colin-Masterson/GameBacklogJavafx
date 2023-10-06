@@ -1,7 +1,11 @@
 package net.colinmasterson.gamebacklogjavafx.database;
 
 
+import net.colinmasterson.gamebacklogjavafx.Game;
+
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class DatabaseController {
@@ -35,7 +39,7 @@ public class DatabaseController {
             ResultSet resultSet = meta.getTables(null, null, "games", new String[]{"TABLE"});
 
             if (!resultSet.next()) {
-                String createTableSql = "create table games (ID INTEGER PRIMARY KEY AUTOINCREMENT, name varchar(30), description varchar(70), console varchar(20))";
+                String createTableSql = "create table games (ID INTEGER PRIMARY KEY AUTOINCREMENT, name varchar(30), console varchar(20), status varchar(20))";
 
                 Statement statement = connection.createStatement();
                 statement.executeUpdate(createTableSql);
@@ -54,10 +58,10 @@ public class DatabaseController {
         }
     }
 
-    public void addGame(String name, String description, String console) {
+    public void addGame(String name, String console, String status) {
 
 
-        String addGameSql = "INSERT INTO games(name, description, console) " +
+        String addGameSql = "INSERT INTO games(name, console, status) " +
                 "VALUES(?,?,?)";
 
 
@@ -69,8 +73,8 @@ public class DatabaseController {
 
 
             preparedStatement.setString(1, name);
-            preparedStatement.setString(2, description);
-            preparedStatement.setString(3, console);
+            preparedStatement.setString(2, console);
+            preparedStatement.setString(3, status);
 
             preparedStatement.executeUpdate();
 
@@ -83,7 +87,8 @@ public class DatabaseController {
 
     }
 
-    public void getGames(){
+    public List<Game> getGames(){
+        List<Game> games = new ArrayList<>();
         String getGamesSql = "SELECT * from games";
         try{
         connect();
@@ -91,16 +96,65 @@ public class DatabaseController {
 
         ResultSet output = preparedStatement.executeQuery();
 
-            System.out.println("ID" +"\t"+ "Name" + "\t" + "Desc" + "\t" + "Console");
-            while (output.next()){
-                int ID = output.getInt("ID");
-                String name = output.getString("name");
-                String desc = output.getString("description");
-                String console = output.getString("console");
+        while(output.next()){
+            games.add(new Game(output.getInt("ID"),output.getString("name"), output.getString("console"), output.getString("status")));
+        }
 
-                System.out.println(ID + "\t" + name + "\t" + desc + "\t" + console);
-            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            closeConnection();
+        }
 
+        for (Game game : games){
+            System.out.println(game);
+        }
+        return games;
+    }
+
+    public void deleteGame(int id){
+        String deleteSql = "DELETE FROM games WHERE ID = ?";
+
+        try{
+            connect();
+            PreparedStatement preparedStatement = connection.prepareStatement(deleteSql);
+
+            preparedStatement.setInt(1, id);
+
+            preparedStatement.executeUpdate();
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            closeConnection();
+        }
+    }
+
+    public void deleteAllGames(){
+        String deleteAllSql = "DELETE from games";
+
+        try {
+            connect();
+            PreparedStatement preparedStatement = connection.prepareStatement(deleteAllSql);
+            preparedStatement.executeUpdate();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            closeConnection();
+        }
+    }
+
+    public void updateStatus(String status, int id){
+        String updateStatusSql = "UPDATE games SET status = ? WHERE ID = ?";
+
+        try{
+            connect();
+
+            PreparedStatement preparedStatement = connection.prepareStatement(updateStatusSql);
+            preparedStatement.setString(1,status);
+            preparedStatement.setInt(2, id);
+
+            preparedStatement.executeUpdate();
         }catch (SQLException e){
             e.printStackTrace();
         }finally {
