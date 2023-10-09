@@ -11,9 +11,9 @@ import java.io.IOException;
 public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
-        stage.setTitle("Hello!");
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("game-library.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        stage.setTitle("Game Library");
         stage.setScene(scene);
         stage.show();
     }
@@ -21,8 +21,9 @@ public class HelloApplication extends Application {
     public static void main(String[] args) {
         DatabaseController db = new DatabaseController();
         db.createTable();
-        db.addGame("Test","Test", "Test");
-        db.getGames();
+
+
+       // db.getGames();
         launch();
     }
 }

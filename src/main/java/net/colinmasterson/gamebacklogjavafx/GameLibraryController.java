@@ -1,21 +1,22 @@
 package net.colinmasterson.gamebacklogjavafx;
 
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.AnchorPane;
 import net.colinmasterson.gamebacklogjavafx.database.DatabaseController;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class HelloController implements Initializable {
+public class GameLibraryController implements Initializable {
 
     DatabaseController db = new DatabaseController();
 
@@ -23,13 +24,16 @@ public class HelloController implements Initializable {
     private Button addGame;
 
     @FXML
-    private TableColumn<Game, String> console;
-
-    @FXML
     private Button deleteGame;
 
     @FXML
-    private AnchorPane rightPane;
+    private Label allGamesLabel;
+
+    @FXML
+    private Label completedGamesLabel;
+
+    @FXML
+    private TableColumn<Game, String> console;
 
     @FXML
     private TableColumn<Game, Integer> id;
@@ -57,13 +61,10 @@ public class HelloController implements Initializable {
         }
     }
 
-    @FXML private void addGame(ActionEvent event){
-        event.consume();
-        rightPane.getChildren().clear();
-    }
-
-
     ObservableList<Game> list = FXCollections.observableArrayList(db.getGames());
+
+
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -72,6 +73,16 @@ public class HelloController implements Initializable {
         status.setCellValueFactory(new PropertyValueFactory<Game, String>("status"));
         console.setCellValueFactory(new PropertyValueFactory<Game, String>("console"));
 
+        allGamesLabel.setText("All Games: "+ list.size());
+
+        list.addListener(new ListChangeListener<Game>() {
+            @Override
+            public void onChanged(Change<? extends Game> change) {
+                allGamesLabel.setText("All Games: " + list.size());
+            }
+        });
+
         table.setItems(list);
     }
+
 }
