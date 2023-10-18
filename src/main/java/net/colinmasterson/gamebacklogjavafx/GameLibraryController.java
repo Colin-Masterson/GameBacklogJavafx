@@ -73,8 +73,8 @@ public class GameLibraryController implements Initializable {
             FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("add-game.fxml"));
             Stage stage = new Stage();
             Scene scene = new Scene(fxmlLoader.load());
-            AddGameController test = fxmlLoader.getController();
-            test.addGame = addGame;
+            AddGameController addGameController = fxmlLoader.getController();
+            addGameController.addGame = addGame;
             stage.setTitle("Add Game");
             stage.setScene(scene);
             addGame.setDisable(true);

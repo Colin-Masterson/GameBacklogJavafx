@@ -23,7 +23,7 @@ public class AddGameController {
     private ComboBox<?> status;
 
     @FXML
-    private void test(){
+    private void addGame(){
         addGame.setDisable(false);
     }
 

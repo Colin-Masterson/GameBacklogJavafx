@@ -30,7 +30,7 @@
                   <Insets bottom="25.0" />
                </VBox.margin>
             </ComboBox>
-            <Button fx:id="addGame" mnemonicParsing="false" text="Add Game" onAction="#test" />
+            <Button fx:id="addGame" mnemonicParsing="false" text="Add Game" onAction="#addGame" />
          </children>
       </VBox>
    </children>
