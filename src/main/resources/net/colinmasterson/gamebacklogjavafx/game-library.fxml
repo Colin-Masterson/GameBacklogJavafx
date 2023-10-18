@@ -39,7 +39,7 @@
             </HBox>
             <HBox alignment="CENTER_RIGHT" prefHeight="23.0" prefWidth="600.0" spacing="10.0">
                <children>
-                  <Button fx:id="addGame" mnemonicParsing="false" text="Add Game" />
+                  <Button fx:id="addGame" mnemonicParsing="false" text="Add Game" onAction="#addGame"/>
                   <Button fx:id="deleteGame" mnemonicParsing="false" text="Delete Game" onAction="#deleteGame" />
                </children>
                <VBox.margin>

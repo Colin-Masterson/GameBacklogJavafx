@@ -4,13 +4,19 @@ import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
+
 import net.colinmasterson.gamebacklogjavafx.database.DatabaseController;
 
 import java.net.URL;
@@ -21,7 +27,7 @@ public class GameLibraryController implements Initializable {
     DatabaseController db = new DatabaseController();
 
     @FXML
-    private Button addGame;
+    public Button addGame;
 
     @FXML
     private Button deleteGame;
@@ -61,6 +67,26 @@ public class GameLibraryController implements Initializable {
         }
     }
 
+    @FXML
+    private void addGame(ActionEvent event){
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("add-game.fxml"));
+            Stage stage = new Stage();
+            Scene scene = new Scene(fxmlLoader.load());
+            AddGameController test = fxmlLoader.getController();
+            test.addGame = addGame;
+            stage.setTitle("Add Game");
+            stage.setScene(scene);
+            addGame.setDisable(true);
+            stage.setOnCloseRequest(e -> addGame.setDisable(false));
+            stage.show();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+
+    }
+
     ObservableList<Game> list = FXCollections.observableArrayList(db.getGames());
 
 
@@ -75,12 +101,7 @@ public class GameLibraryController implements Initializable {
 
         allGamesLabel.setText("All Games: "+ list.size());
 
-        list.addListener(new ListChangeListener<Game>() {
-            @Override
-            public void onChanged(Change<? extends Game> change) {
-                allGamesLabel.setText("All Games: " + list.size());
-            }
-        });
+        list.addListener((ListChangeListener<Game>) change -> allGamesLabel.setText("All Games: " + list.size()));
 
         table.setItems(list);
     }
