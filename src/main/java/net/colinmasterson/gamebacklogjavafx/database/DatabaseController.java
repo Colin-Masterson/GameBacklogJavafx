@@ -106,9 +106,7 @@ public class DatabaseController {
             closeConnection();
         }
 
-        for (Game game : games){
-            System.out.println(game);
-        }
+
         return games;
     }
 

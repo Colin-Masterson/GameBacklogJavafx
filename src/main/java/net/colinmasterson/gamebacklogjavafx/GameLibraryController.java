@@ -51,7 +51,7 @@ public class GameLibraryController implements Initializable {
     private TableColumn<Game, String> status;
 
     @FXML
-    private TableView<Game> table;
+    public TableView<Game> table;
 
 
 
@@ -74,7 +74,9 @@ public class GameLibraryController implements Initializable {
             Stage stage = new Stage();
             Scene scene = new Scene(fxmlLoader.load());
             AddGameController addGameController = fxmlLoader.getController();
-            addGameController.addGame = addGame;
+            addGameController.libraryAddGame = addGame;
+            addGameController.gameList = list;
+            addGameController.table = table;
             stage.setTitle("Add Game");
             stage.setScene(scene);
             addGame.setDisable(true);
@@ -98,6 +100,8 @@ public class GameLibraryController implements Initializable {
         name.setCellValueFactory(new PropertyValueFactory<Game, String>("name"));
         status.setCellValueFactory(new PropertyValueFactory<Game, String>("status"));
         console.setCellValueFactory(new PropertyValueFactory<Game, String>("console"));
+
+
 
         allGamesLabel.setText("All Games: "+ list.size());
 
