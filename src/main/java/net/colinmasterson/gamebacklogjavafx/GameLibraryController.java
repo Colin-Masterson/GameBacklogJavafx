@@ -91,7 +91,19 @@ public class GameLibraryController implements Initializable {
 
     ObservableList<Game> list = FXCollections.observableArrayList(db.getGames());
 
+    private String completedGames(){
+        int completed = 0;
+        String labelText = "Completed Games: ";
 
+
+        for (Game game: list){
+            if(game.getStatus().equals("Completed")){
+                completed++;
+            }
+        }
+
+        return labelText + completed;
+    }
 
 
     @Override
@@ -104,8 +116,10 @@ public class GameLibraryController implements Initializable {
 
 
         allGamesLabel.setText("All Games: "+ list.size());
+        completedGamesLabel.setText(completedGames());
 
         list.addListener((ListChangeListener<Game>) change -> allGamesLabel.setText("All Games: " + list.size()));
+        list.addListener((ListChangeListener<Game>) change -> completedGamesLabel.setText(completedGames()));
 
         table.setItems(list);
     }
