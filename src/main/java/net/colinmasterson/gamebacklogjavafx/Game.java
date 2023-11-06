@@ -1,18 +1,29 @@
 package net.colinmasterson.gamebacklogjavafx;
 
 
+import javafx.scene.control.ComboBox;
+
 public class Game {
 
     private final int id;
     private final String name;
     private final String console;
-    private String status;
+    private ComboBox status;
+
+    private String[] statusList ={"Not Started", "In Progress", "Completed","Want to Get"};
+
 
     public Game(int id,String name, String console, String status){
         this.id = id;
         this.name = name;
         this.console = console;
-        this.status = status;
+        this.status = new ComboBox<>();
+
+
+            this.status.getItems().addAll(statusList);
+
+        this.status.getSelectionModel().select(status);
+
     }
 
     public int getId() {
@@ -27,11 +38,11 @@ public class Game {
         return console;
     }
 
-    public String getStatus() {
+    public ComboBox getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(ComboBox status) {
         this.status = status;
     }
 
