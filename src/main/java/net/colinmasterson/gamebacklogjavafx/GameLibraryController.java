@@ -35,8 +35,6 @@ public class GameLibraryController implements Initializable {
     @FXML
     private Label allGamesLabel;
 
-    @FXML
-    private Label completedGamesLabel;
 
     @FXML
     private TableColumn<Game, String> console;
@@ -91,21 +89,6 @@ public class GameLibraryController implements Initializable {
 
     ObservableList<Game> list = FXCollections.observableArrayList(db.getGames());
 
-    private String completedGames(){
-        int completed = 0;
-        String labelText = "Completed Games: ";
-
-
-        for (Game game: list){
-            if(game.getStatus().equals("Completed")){
-                completed++;
-            }
-        }
-
-        return labelText + completed;
-    }
-
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         id.setCellValueFactory(new PropertyValueFactory<Game,Integer>("id"));
@@ -116,10 +99,8 @@ public class GameLibraryController implements Initializable {
 
 
         allGamesLabel.setText("All Games: "+ list.size());
-        completedGamesLabel.setText(completedGames());
 
         list.addListener((ListChangeListener<Game>) change -> allGamesLabel.setText("All Games: " + list.size()));
-        list.addListener((ListChangeListener<Game>) change -> completedGamesLabel.setText(completedGames()));
 
         table.setItems(list);
     }

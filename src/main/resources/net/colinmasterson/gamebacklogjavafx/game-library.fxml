@@ -30,11 +30,6 @@
                         <Font size="13.0" />
                      </font>
                   </Label>
-                  <Label fx:id="completedGamesLabel" text="Completed Games: 0">
-                     <font>
-                        <Font size="13.0" />
-                     </font>
-                  </Label>
                </children>
             </HBox>
             <HBox alignment="CENTER_RIGHT" prefHeight="23.0" prefWidth="600.0" spacing="10.0">

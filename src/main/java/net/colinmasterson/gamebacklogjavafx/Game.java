@@ -2,6 +2,7 @@ package net.colinmasterson.gamebacklogjavafx;
 
 
 import javafx.scene.control.ComboBox;
+import net.colinmasterson.gamebacklogjavafx.database.DatabaseController;
 
 public class Game {
 
@@ -11,6 +12,7 @@ public class Game {
     private ComboBox status;
 
     private String[] statusList ={"Not Started", "In Progress", "Completed","Want to Get"};
+    DatabaseController db = new DatabaseController();
 
 
     public Game(int id,String name, String console, String status){
@@ -23,6 +25,10 @@ public class Game {
             this.status.getItems().addAll(statusList);
 
         this.status.getSelectionModel().select(status);
+
+        this.status.setOnAction(e->{
+            db.updateStatus(this.status.getSelectionModel().getSelectedItem().toString(), id);
+        });
 
     }
 
